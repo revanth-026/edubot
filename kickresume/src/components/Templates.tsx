@@ -11,8 +11,8 @@ const Templates: React.FC = () => {
       name: 'Executive Pro',
       category: 'Formal & Corporate',
       rating: 4.9,
-      downloads: '15,000+',
-      image: 'https://images.pexels.com/photos/590016/pexels-photo-590016.jpeg?auto=compress&cs=tinysrgb&w=400',
+      downloads: '5,000+',
+      image: 'https://theartofresume.com/cdn/shop/files/1_resume_template_design_8_62828444-e448-486b-9381-407ac69a929d.png?v=1707449553&width=713',
       color: '#2F3C7E',
       icon: Briefcase,
       emoji: '📁'
@@ -21,8 +21,8 @@ const Templates: React.FC = () => {
       name: 'Creative Edge',
       category: 'Bold & Visual',
       rating: 4.8,
-      downloads: '12,000+',
-      image: 'https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=400',
+      downloads: '3,500+',
+      image: 'https://cdn-blog.novoresume.com/articles/creative-resume-templates/creative-resume-example-1.webp',
       color: '#00C9A7',
       icon: Palette,
       emoji: '🎨'
@@ -31,8 +31,8 @@ const Templates: React.FC = () => {
       name: 'Modern Minimal',
       category: 'Simple & Sleek',
       rating: 4.9,
-      downloads: '18,000+',
-      image: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=400',
+      downloads: '4,000+',
+      image: 'https://s3.resume.io/cdn-cgi/image/width=380,format=auto/uploads/local_template_image/image/383/persistent-resource/santiago-resume-templates.jpg?v=1656070649',
       color: '#FF6B6B',
       icon: Minimize,
       emoji: '✏️'
@@ -41,8 +41,8 @@ const Templates: React.FC = () => {
       name: 'Tech Specialist',
       category: 'Developer & IT Friendly',
       rating: 4.7,
-      downloads: '9,000+',
-      image: 'https://images.pexels.com/photos/590024/pexels-photo-590024.jpeg?auto=compress&cs=tinysrgb&w=400',
+      downloads: '7,000+',
+      image: 'https://marketplace.canva.com/EAFRuCp3DcY/3/0/1131w/canva-black-white-minimalist-cv-resume-fbJ3nW9XufE.jpg',
       color: '#2F3C7E',
       icon: Code,
       emoji: '👨‍💻'
@@ -68,6 +68,26 @@ const Templates: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>, template: any) => {
+    const target = e.target as HTMLImageElement;
+    target.style.display = 'none';
+    const parent = target.parentElement;
+    if (parent) {
+      parent.style.background = `linear-gradient(135deg, ${template.color}20, ${template.color}10)`;
+      parent.innerHTML += `
+        <div class="flex items-center justify-center h-64">
+          <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-lg flex items-center justify-center" style="background-color: ${template.color}20">
+              <span class="text-2xl">${template.emoji}</span>
+            </div>
+            <p class="text-gray-500 font-medium">${template.name}</p>
+            <p class="text-gray-400 text-sm">Template Preview</p>
+          </div>
+        </div>
+      `;
+    }
+  };
+
   return (
     <section id="templates" ref={templatesRef} className="py-20 bg-[#F8F9FA]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -83,7 +103,7 @@ const Templates: React.FC = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {templates.map((template, index) => {
             const isVisible = visibleTemplates.includes(index);
-            const Icon = template.icon;
+            const IconComponent = template.icon;
             
             return (
               <div
@@ -98,7 +118,8 @@ const Templates: React.FC = () => {
                   <img 
                     src={template.image} 
                     alt={template.name}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-64 object-cover object-top group-hover:scale-110 transition-transform duration-300"
+                    onError={(e) => handleImageError(e, template)}
                   />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
                     <button className="p-3 bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/30 transition-colors duration-200">
@@ -129,7 +150,7 @@ const Templates: React.FC = () => {
                   </p>
                   
                   <p className="text-sm font-medium text-[#2F3C7E]">
-                    ⭐ {template.rating} • {template.downloads} Downloads
+                   {template.downloads} Downloads
                   </p>
                 </div>
               </div>
@@ -139,7 +160,7 @@ const Templates: React.FC = () => {
 
         <div className="text-center mt-12">
           <Link
-            to="/register"
+            to="/login"
             className="bg-[#2F3C7E] text-white px-8 py-4 rounded-lg hover:bg-[#00C9A7] transition-colors duration-200 font-semibold"
           >
             Get Started Now

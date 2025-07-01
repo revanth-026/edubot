@@ -1,10 +1,17 @@
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/*/.{js,ts,jsx,tsx}", // ✅ Correct pattern for all files inside subdirectories
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#2F3C7E',
+        accent: '#00C9A7',
+        softIvory: '#F8F9FA',
+        textDark: '#212529',
+        mutedText: '#6C757D',
+        highlight: '#FF6B6B',
+        cardBg: '#E9ECEF',
+      }
+    },
   },
   plugins: [],
 };

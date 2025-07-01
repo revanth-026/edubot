@@ -1,9 +1,17 @@
-// src/pages/LandingPage.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
-import { ArrowRight, FileText, MousePointer, FileText as FT, CheckCircle, Palette, Heart, Download } from 'lucide-react';
+import {
+  ArrowRight,
+  FileText,
+  MousePointer,
+  FileText as FT,
+  CheckCircle,
+  Palette,
+  Heart,
+  Download
+} from 'lucide-react';
 import Templates from '../components/Templates';
 
 const LandingPage: React.FC = () => {
@@ -84,7 +92,7 @@ const LandingPage: React.FC = () => {
                   Create a professional resume in minutes using recruiter-approved templates and a beginner-friendly builder — completely free to use.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link to="/register" className="bg-[#2F3C7E] text-white px-8 py-4 rounded-lg hover:bg-[#00C9A7] transition-all duration-200 font-semibold flex items-center justify-center group">
+                  <Link to="/login" className="bg-[#2F3C7E] text-white px-8 py-4 rounded-lg hover:bg-[#00C9A7] transition-all duration-200 font-semibold flex items-center justify-center group">
                     Get Started
                     <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
                   </Link>
@@ -127,7 +135,7 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Features Section Inline */}
+        {/* Features Section */}
         <section id="features" ref={featuresRef} className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -166,8 +174,53 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Templates Section */}
+        {/* Templates */}
         <Templates />
+
+        {/* CTA Section */}
+        <section className="py-20 bg-gradient-to-br from-[#2F3C7E] to-[#00C9A7] overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center transition-all duration-800">
+              <div className="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm text-white rounded-full text-sm font-medium mb-8">
+                <Heart size={16} className="mr-2" />
+                🚀 Start Building Today – It's 100% Free!
+              </div>
+
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                Don't let a boring resume hold you back.
+              </h2>
+
+              <p className="text-xl text-white/90 max-w-3xl mx-auto mb-10 leading-relaxed">
+                Our builder is completely free — no sign-up or payment required to get started.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                <Link
+                  to="/login"
+                  className="bg-white text-[#2F3C7E] px-8 py-4 rounded-lg hover:bg-[#F8F9FA] transition-all duration-200 font-semibold flex items-center group"
+                >
+                  Build My Resume
+                  <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+                </Link>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-white/80">
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-[#00C9A7] rounded-full mr-2"></div>
+                  <span>No credit card required</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-[#00C9A7] rounded-full mr-2"></div>
+                  <span>Free templates included</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-[#00C9A7] rounded-full mr-2"></div>
+                  <span>Export to PDF instantly</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
