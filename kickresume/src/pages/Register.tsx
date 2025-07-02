@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Lock, ArrowRight, Eye, EyeOff, FileText, User, Briefcase, GraduationCap, Award, Star } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Register: React.FC = () => {
   const [name, setName] = useState('');
@@ -10,6 +11,8 @@ const Register: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,9 +29,12 @@ const Register: React.FC = () => {
 
     // Simulate API call
     setTimeout(() => {
-      setIsLoading(false);
-      console.log('Registration attempted with:', { name, email, password, confirmPassword });
-    }, 2000);
+  setIsLoading(false);
+  console.log('Registration attempted with:', { name, email, password, confirmPassword });
+  // Add optional success feedback here
+  navigate('/dashboard'); // ✅ redirects to dashboard
+}, 2000);
+
   };
 
   return (
@@ -204,7 +210,7 @@ const Register: React.FC = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#6C757D] hover:text-[#00C9A7] transition-colors duration-200 outline-none focus:outline-none border-none bg-transparent z-10"
                 >
-                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  {showPassword ? <Eye size={16} /> : <EyeOff size={16} />}
                 </button>
               </div>
             </div>
@@ -229,7 +235,7 @@ const Register: React.FC = () => {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#6C757D] hover:text-[#00C9A7] transition-colors duration-200 outline-none focus:outline-none border-none bg-transparent z-10"
                 >
-                  {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  {showConfirmPassword ? <Eye size={16} /> : <EyeOff size={16} />}
                 </button>
               </div>
             </div>
@@ -262,9 +268,10 @@ const Register: React.FC = () => {
           {/* Sign In Link */}
           <p className="text-center text-[#6C757D] text-sm mt-3">
             Already have an account?{' '}
-            <button className="text-[#00C9A7] hover:text-[#2F3C7E] font-semibold transition-colors duration-200 hover:underline">
-              Sign In
-            </button>
+            <Link to="/login" className="text-[#00C9A7] hover:text-[#2F3C7E] font-semibold transition-colors duration-200 hover:underline">
+             Sign In
+           </Link>
+
           </p>
         </div>
 

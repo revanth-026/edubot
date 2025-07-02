@@ -1,4 +1,3 @@
-// src/contexts/ToastContext.tsx
 import React, { createContext, useContext, useState } from 'react';
 
 interface Toast {
@@ -31,9 +30,10 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const newToast = { id, message, type };
     setToasts(prev => [...prev, newToast]);
 
+    
     setTimeout(() => {
       removeToast(id);
-    }, 5000);
+    }, 1000);
   };
 
   const removeToast = (id: string) => {
@@ -43,24 +43,6 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   return (
     <ToastContext.Provider value={{ toasts, showToast, removeToast }}>
       {children}
-
-      {/* Toast Display UI */}
-      <div className="fixed top-5 right-5 z-50 space-y-3">
-        {toasts.map((toast) => (
-          <div
-            key={toast.id}
-            className={`rounded-lg px-4 py-3 text-white shadow-md transition-all duration-300 ${
-              toast.type === 'success'
-                ? 'bg-green-600'
-                : toast.type === 'error'
-                ? 'bg-red-600'
-                : 'bg-blue-600'
-            }`}
-          >
-            {toast.message}
-          </div>
-        ))}
-      </div>
     </ToastContext.Provider>
   );
 };

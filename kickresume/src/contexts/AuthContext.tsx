@@ -26,12 +26,13 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    // Check if user is logged in on app start
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
     }
     setIsLoading(false);
   }, []);
@@ -39,21 +40,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      // Simulate backend call
-      await new Promise((res) => setTimeout(res, 1000));
-
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Mock authentication - in real app, this would be an API call
       if (email && password) {
-        const mockUser: User = {
+        const mockUser = {
           id: '1',
           name: email.split('@')[0],
-          email,
+          email: email
         };
         setUser(mockUser);
         localStorage.setItem('user', JSON.stringify(mockUser));
         setIsLoading(false);
         return true;
       }
-
       setIsLoading(false);
       return false;
     } catch (error) {
@@ -65,17 +66,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (name: string, email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      // Simulate backend call
-      await new Promise((res) => setTimeout(res, 1000));
-
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Mock registration - in real app, this would be an API call
       if (name && email && password) {
-        const newUser: User = { id: '1', name, email };
-        setUser(newUser);
-        localStorage.setItem('user', JSON.stringify(newUser));
+        const mockUser = {
+          id: '1',
+          name: name,
+          email: email
+        };
+        setUser(mockUser);
+        localStorage.setItem('user', JSON.stringify(mockUser));
         setIsLoading(false);
         return true;
       }
-
       setIsLoading(false);
       return false;
     } catch (error) {
@@ -87,12 +92,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
-    localStorage.removeItem('resumes'); // optional: clean up local saved data
+    localStorage.removeItem('resumes');
   };
 
-  return (
-    <AuthContext.Provider value={{ user, login, register, logout, isLoading }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    user,
+    login,
+    register,
+    logout,
+    isLoading
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

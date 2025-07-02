@@ -1,26 +1,47 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, Eye, EyeOff, FileText, User, Briefcase, GraduationCap, Award, Star } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
+import Toast from '../components/Toast';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { login, isLoading } = useAuth();
+  const { showToast } = useToast();
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    
+    if (!email || !password) {
+      showToast('Please fill in all fields', 'error');
+      return;
+    }
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log('Login attempted with:', { email, password });
-    }, 2000);
+    try {
+      const success = await login(email, password);
+      if (success) {
+        showToast('Login successful! Welcome back.', 'success');
+        // Redirect after a short delay to show the success message
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 500);
+      } else {
+        showToast('Invalid email or password. Please try again.', 'error');
+      }
+    } catch (error) {
+      showToast('An error occurred. Please try again.', 'error');
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#2F3C7E] via-[#2F3C7E] to-[#1a2456] flex items-center justify-center p-4 relative overflow-hidden">
+      <Toast />
+      
       {/* Resume Builder Themed Background Animations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating Resume Cards */}
@@ -128,9 +149,11 @@ const Login: React.FC = () => {
         <div className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/20 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-3xl">
           {/* Header */}
           <div className="text-center mb-6">
-            <div className="w-14 h-14 bg-gradient-to-br from-[#2F3C7E] to-[#00C9A7] rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg transform transition-transform duration-300 hover:rotate-6">
-              <FileText className="text-white" size={24} />
-            </div>
+            <Link to="/" className="inline-block">
+              <div className="w-14 h-14 bg-gradient-to-br from-[#2F3C7E] to-[#00C9A7] rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg transform transition-transform duration-300 hover:rotate-6">
+                <FileText className="text-white" size={24} />
+              </div>
+            </Link>
             <h2 className="text-2xl font-bold text-[#212529] mb-1">Welcome Back</h2>
             <p className="text-[#6C757D] text-sm">Continue building your perfect resume</p>
           </div>
@@ -215,9 +238,9 @@ const Login: React.FC = () => {
           {/* Sign Up Link */}
           <p className="text-center text-[#6C757D] text-sm mt-4">
             Don't have an account?{' '}
-            <button className="text-[#00C9A7] hover:text-[#2F3C7E] font-semibold transition-colors duration-200 hover:underline">
+            <Link to="/register" className="text-[#00C9A7] hover:text-[#2F3C7E] font-semibold transition-colors duration-200 hover:underline">
               Create Account
-            </button>
+            </Link>
           </p>
         </div>
 
