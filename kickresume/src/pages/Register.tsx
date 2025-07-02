@@ -268,7 +268,7 @@ const Register: React.FC = () => {
           {/* Sign In Link */}
           <p className="text-center text-[#6C757D] text-sm mt-3">
             Already have an account?{' '}
-            <Link to="/login" className="text-[#00C9A7] hover:text-[#2F3C7E] font-semibold transition-colors duration-200 hover:underline">
+            <Link to="/login" className=" text-[#00C9A7] hover:text-[#2F3C7E] font-semibold transition-colors duration-200 hover:underline">
              Sign In
            </Link>
 

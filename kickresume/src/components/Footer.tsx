@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
             <div className="space-y-4">
               <div className="flex items-center">
                 <Mail size={20} className="text-[#00C9A7] mr-3" />
-                <span className="text-gray-300">support@yourdomain.com</span>
+                <span className="text-gray-300">kickresume@gmail.com</span>
               </div>
             </div>
             
@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-[#6C757D]/30 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-300 text-sm">
-              © 2025 ResumeBuilder. All rights reserved.
+              © 2025 KickResume. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-gray-300 hover:text-[#00C9A7] text-sm transition-colors duration-200">

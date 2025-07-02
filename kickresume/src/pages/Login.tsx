@@ -205,7 +205,7 @@ const Login: React.FC = () => {
 
             {/* Forgot Password */}
             <div className="text-right">
-              <button type="button" className="text-[#00C9A7] hover:text-[#2F3C7E] text-sm font-medium transition-colors duration-200 hover:underline">
+              <button type="button" className="text-[#00C9A7] hover:text-[#2F3C7E] text-sm font-medium transition-colors duration-200 hover:underline focus:outline-none">
                 Forgot password?
               </button>
             </div>
@@ -225,7 +225,7 @@ const Login: React.FC = () => {
                 </div>
               ) : (
                 <div className="flex items-center">
-                  Sign In to Resume Builder
+                  Sign In to KickResume
                   <ArrowRight 
                     className={`ml-2 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} 
                     size={18} 
@@ -238,7 +238,7 @@ const Login: React.FC = () => {
           {/* Sign Up Link */}
           <p className="text-center text-[#6C757D] text-sm mt-4">
             Don't have an account?{' '}
-            <Link to="/register" className="text-[#00C9A7] hover:text-[#2F3C7E] font-semibold transition-colors duration-200 hover:underline">
+            <Link to="/register" className=" text-[#00C9A7] hover:text-[#2F3C7E] font-semibold transition-colors duration-200 hover:underline">
               Create Account
             </Link>
           </p>

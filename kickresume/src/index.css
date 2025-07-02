@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Optional: Remove focus outlines globally */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
 @layer base {
   html {
     scroll-behavior: smooth;
