@@ -10,53 +10,15 @@ const Register: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<{ 
-    name?: string; 
-    email?: string; 
-    password?: string; 
-    confirmPassword?: string; 
-  }>({});
-
-  const validateForm = () => {
-    const newErrors: { 
-      name?: string; 
-      email?: string; 
-      password?: string; 
-      confirmPassword?: string; 
-    } = {};
-
-    if (!name.trim()) {
-      newErrors.name = 'Full name is required';
-    } else if (name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
-    }
-
-    if (!email) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email is invalid';
-    }
-
-    if (!password) {
-      newErrors.password = 'Password is required';
-    } else if (password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-
-    if (!confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (password !== confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!validateForm()) {
+    if (!name || !email || !password || !confirmPassword) {
+      return;
+    }
+
+    if (password !== confirmPassword) {
       return;
     }
 
@@ -175,9 +137,9 @@ const Register: React.FC = () => {
       </div>
 
       <div className="max-w-sm w-full relative z-10">
-        <div className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/20 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-3xl">
+        <div className="bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl p-5 border border-white/20 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-3xl">
           {/* Header */}
-          <div className="text-center mb-6">
+          <div className="text-center mb-5">
             <div className="w-12 h-12 bg-gradient-to-br from-[#2F3C7E] to-[#00C9A7] rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg transform transition-transform duration-300 hover:rotate-6">
               <FileText className="text-white" size={24} />
             </div>
@@ -185,13 +147,13 @@ const Register: React.FC = () => {
             <p className="text-[#6C757D] text-sm">Join thousands building perfect resumes</p>
           </div>
 
-          <form onSubmit={handleRegister} className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-3">
             {/* Full Name Field */}
             <div className="group">
-              <label className="block mb-1.5 text-[#212529] font-semibold text-sm">Full Name</label>
+              <label className="block mb-1 text-[#212529] font-semibold text-sm">Full Name</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                  <User className="text-[#6C757D] group-focus-within:text-[#00C9A7] transition-colors duration-200" size={18} />
+                  <User className="text-[#6C757D] group-focus-within:text-[#00C9A7] transition-colors duration-200" size={16} />
                 </div>
                 <input
                   type="text"
@@ -199,20 +161,17 @@ const Register: React.FC = () => {
                   onChange={(e) => setName(e.target.value)}
                   required
                   placeholder="Enter your full name"
-                  className={`w-full border-2 ${errors.name ? 'border-red-300 focus:border-red-500' : 'border-[#E9ECEF] focus:border-[#00C9A7]'} rounded-xl pl-10 pr-3 py-3 text-[#212529] placeholder-[#6C757D] outline-none focus:ring-4 focus:ring-[#00C9A7]/10 transition-all duration-300 bg-white/90 backdrop-blur-sm hover:border-[#00C9A7]/50 relative z-0`}
+                  className="w-full border-2 border-[#E9ECEF] focus:border-[#00C9A7] rounded-xl pl-10 pr-3 py-2.5 text-[#212529] placeholder-[#6C757D] outline-none focus:ring-4 focus:ring-[#00C9A7]/10 transition-all duration-300 bg-white/90 backdrop-blur-sm hover:border-[#00C9A7]/50 text-sm"
                 />
-                {errors.name && (
-                  <p className="mt-1 text-red-500 text-xs">{errors.name}</p>
-                )}
               </div>
             </div>
 
             {/* Email Field */}
             <div className="group">
-              <label className="block mb-1.5 text-[#212529] font-semibold text-sm">Email Address</label>
+              <label className="block mb-1 text-[#212529] font-semibold text-sm">Email Address</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                  <Mail className="text-[#6C757D] group-focus-within:text-[#00C9A7] transition-colors duration-200" size={18} />
+                  <Mail className="text-[#6C757D] group-focus-within:text-[#00C9A7] transition-colors duration-200" size={16} />
                 </div>
                 <input
                   type="email"
@@ -220,20 +179,17 @@ const Register: React.FC = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="you@example.com"
-                  className={`w-full border-2 ${errors.email ? 'border-red-300 focus:border-red-500' : 'border-[#E9ECEF] focus:border-[#00C9A7]'} rounded-xl pl-10 pr-3 py-3 text-[#212529] placeholder-[#6C757D] outline-none focus:ring-4 focus:ring-[#00C9A7]/10 transition-all duration-300 bg-white/90 backdrop-blur-sm hover:border-[#00C9A7]/50 relative z-0`}
+                  className="w-full border-2 border-[#E9ECEF] focus:border-[#00C9A7] rounded-xl pl-10 pr-3 py-2.5 text-[#212529] placeholder-[#6C757D] outline-none focus:ring-4 focus:ring-[#00C9A7]/10 transition-all duration-300 bg-white/90 backdrop-blur-sm hover:border-[#00C9A7]/50 text-sm"
                 />
-                {errors.email && (
-                  <p className="mt-1 text-red-500 text-xs">{errors.email}</p>
-                )}
               </div>
             </div>
 
             {/* Password Field */}
             <div className="group">
-              <label className="block mb-1.5 text-[#212529] font-semibold text-sm">Password</label>
+              <label className="block mb-1 text-[#212529] font-semibold text-sm">Password</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                  <Lock className="text-[#6C757D] group-focus-within:text-[#00C9A7] transition-colors duration-200" size={18} />
+                  <Lock className="text-[#6C757D] group-focus-within:text-[#00C9A7] transition-colors duration-200" size={16} />
                 </div>
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -241,27 +197,24 @@ const Register: React.FC = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="Create a password"
-                  className={`w-full border-2 ${errors.password ? 'border-red-300 focus:border-red-500' : 'border-[#E9ECEF] focus:border-[#00C9A7]'} rounded-xl pl-10 pr-10 py-3 text-[#212529] placeholder-[#6C757D] outline-none focus:ring-4 focus:ring-[#00C9A7]/10 transition-all duration-300 bg-white/90 backdrop-blur-sm hover:border-[#00C9A7]/50 relative z-0`}
+                  className="w-full border-2 border-[#E9ECEF] focus:border-[#00C9A7] rounded-xl pl-10 pr-10 py-2.5 text-[#212529] placeholder-[#6C757D] outline-none focus:ring-4 focus:ring-[#00C9A7]/10 transition-all duration-300 bg-white/90 backdrop-blur-sm hover:border-[#00C9A7]/50 text-sm"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#6C757D] hover:text-[#00C9A7] transition-colors duration-200 z-10"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#6C757D] hover:text-[#00C9A7] transition-colors duration-200 outline-none focus:outline-none border-none bg-transparent z-10"
                 >
-                  {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
-                {errors.password && (
-                  <p className="mt-1 text-red-500 text-xs">{errors.password}</p>
-                )}
               </div>
             </div>
 
             {/* Confirm Password Field */}
             <div className="group">
-              <label className="block mb-1.5 text-[#212529] font-semibold text-sm">Confirm Password</label>
+              <label className="block mb-1 text-[#212529] font-semibold text-sm">Confirm Password</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
-                  <Lock className="text-[#6C757D] group-focus-within:text-[#00C9A7] transition-colors duration-200" size={18} />
+                  <Lock className="text-[#6C757D] group-focus-within:text-[#00C9A7] transition-colors duration-200" size={16} />
                 </div>
                 <input
                   type={showConfirmPassword ? 'text' : 'password'}
@@ -269,18 +222,15 @@ const Register: React.FC = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                   placeholder="Confirm your password"
-                  className={`w-full border-2 ${errors.confirmPassword ? 'border-red-300 focus:border-red-500' : 'border-[#E9ECEF] focus:border-[#00C9A7]'} rounded-xl pl-10 pr-10 py-3 text-[#212529] placeholder-[#6C757D] outline-none focus:ring-4 focus:ring-[#00C9A7]/10 transition-all duration-300 bg-white/90 backdrop-blur-sm hover:border-[#00C9A7]/50 relative z-0`}
+                  className="w-full border-2 border-[#E9ECEF] focus:border-[#00C9A7] rounded-xl pl-10 pr-10 py-2.5 text-[#212529] placeholder-[#6C757D] outline-none focus:ring-4 focus:ring-[#00C9A7]/10 transition-all duration-300 bg-white/90 backdrop-blur-sm hover:border-[#00C9A7]/50 text-sm"
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#6C757D] hover:text-[#00C9A7] transition-colors duration-200 z-10"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#6C757D] hover:text-[#00C9A7] transition-colors duration-200 outline-none focus:outline-none border-none bg-transparent z-10"
                 >
-                  {showConfirmPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                  {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
-                {errors.confirmPassword && (
-                  <p className="mt-1 text-red-500 text-xs">{errors.confirmPassword}</p>
-                )}
               </div>
             </div>
 
@@ -290,7 +240,7 @@ const Register: React.FC = () => {
               disabled={isLoading}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className="w-full bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] text-white py-3 rounded-xl font-semibold text-base shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none mt-6"
+              className="w-full bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] hover:from-[#00C9A7] hover:to-[#2F3C7E] text-white py-2.5 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none mt-4"
             >
               {isLoading ? (
                 <div className="flex items-center">
@@ -302,7 +252,7 @@ const Register: React.FC = () => {
                   Create Account
                   <ArrowRight 
                     className={`ml-2 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} 
-                    size={18} 
+                    size={16} 
                   />
                 </div>
               )}
@@ -310,7 +260,7 @@ const Register: React.FC = () => {
           </form>
 
           {/* Sign In Link */}
-          <p className="text-center text-[#6C757D] text-sm mt-4">
+          <p className="text-center text-[#6C757D] text-sm mt-3">
             Already have an account?{' '}
             <button className="text-[#00C9A7] hover:text-[#2F3C7E] font-semibold transition-colors duration-200 hover:underline">
               Sign In
