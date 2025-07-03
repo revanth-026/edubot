@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Plus, Search, FileText, Palette, Download, Edit, Eye, Trash2, Calendar, TrendingUp, Users, Award, ChevronLeft, ChevronRight, Lightbulb, Target, Zap, CheckCircle, Star, Clock, ArrowUpRight, Sparkles, Rocket } from 'lucide-react';
+import { Plus, FileText, Palette, Download, Trash2, TrendingUp, Award, ChevronLeft, ChevronRight, Lightbulb, Target, Zap, CheckCircle, Star, Clock, ArrowUpRight, Sparkles, Rocket } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import Navbar from '../components/Navbar';
@@ -27,7 +27,6 @@ interface Template {
 
 const Dashboard: React.FC = () => {
   const [resumes, setResumes] = useState<Resume[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
   const [currentTemplateIndex, setCurrentTemplateIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const { user } = useAuth();
@@ -402,6 +401,14 @@ const Dashboard: React.FC = () => {
                             >
                               Preview
                             </Link>
+                            <button
+                              onClick={() => deleteResume(resume.id)}
+                              className="flex-1 bg-[#FF6B6B] text-white py-3 px-4 rounded-xl hover:shadow-lg transition-all duration-300 text-center font-bold transform hover:scale-105 flex items-center justify-center"
+                              title="Delete Resume"
+                            >
+                              <Trash2 size={18} className="mr-2" />
+                              Delete
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -440,7 +447,7 @@ const Dashboard: React.FC = () => {
                     className="flex transition-transform duration-500 ease-out"
                     style={{ transform: `translateX(-${currentTemplateIndex * 100}%)` }}
                   >
-                    {templates.map((template, index) => (
+                    {templates.map((template) => (
                       <div key={template.id} className="w-full flex-shrink-0 px-3">
                         <div className="bg-[#FAFBFC] rounded-2xl p-8 shadow-[15px_15px_30px_#d1d9e6,-15px_-15px_30px_#ffffff] hover:shadow-[20px_20px_40px_#d1d9e6,-20px_-20px_40px_#ffffff] transition-all duration-500 border border-white/50 group">
                           <div className="flex items-center space-x-6">

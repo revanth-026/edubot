@@ -72,15 +72,24 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom Bar - Centered Copyright */}
         <div className="border-t border-[#6C757D]/30 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="text-center space-y-4">
             <p className="text-gray-300 text-sm">
               © 2025 KickResume. All rights reserved.
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
+            <div className="flex justify-center space-x-6">
               <a href="#" className="text-gray-300 hover:text-[#00C9A7] text-sm transition-colors duration-200">
                 Privacy Policy
+              </a>
+              <a href="#" className="text-gray-300 hover:text-[#00C9A7] text-sm transition-colors duration-200">
+                Terms of Service
+              </a>
+              <a href="#" className="text-gray-300 hover:text-[#00C9A7] text-sm transition-all duration-300 hover:underline">
+                Cookie Policy
+              </a>
+              <a href="#" className="text-gray-300 hover:text-[#00C9A7] text-sm transition-all duration-300 hover:underline">
+                Help Center
               </a>
             </div>
           </div>

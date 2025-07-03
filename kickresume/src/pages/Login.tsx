@@ -29,7 +29,7 @@ const Login: React.FC = () => {
         // Redirect after a short delay to show the success message
         setTimeout(() => {
           navigate('/dashboard');
-        }, 500);
+        }, 1000);
       } else {
         showToast('Invalid email or password. Please try again.', 'error');
       }

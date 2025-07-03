@@ -246,7 +246,7 @@ const Register: React.FC = () => {
               disabled={isLoading}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className="w-full bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] hover:from-[#00C9A7] hover:to-[#2F3C7E] text-white py-2.5 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none mt-4"
+              className="w-full bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] text-white py-2.5 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none mt-4"
             >
               {isLoading ? (
                 <div className="flex items-center">

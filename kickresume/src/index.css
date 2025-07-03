@@ -8,7 +8,6 @@
   box-shadow: none !important;
 }
 
-
 @layer base {
   html {
     scroll-behavior: smooth;
