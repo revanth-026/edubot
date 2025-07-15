@@ -12,7 +12,9 @@ interface Resume {
   template: string;
   createdAt: string;
   updatedAt: string;
+  data: any; 
 }
+
 
 interface Template {
   id: string;
@@ -33,49 +35,48 @@ const Dashboard: React.FC = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  const templates: Template[] = [
+ const templates: Template[] = [
     {
-      id: 'modern',
-      name: 'Modern Professional',
+      id: 'template-1',
+      name: 'Classic Professional',
       description: 'Clean design perfect for corporate roles and business professionals',
-      image: 'https://theartofresume.com/cdn/shop/files/1_resume_template_design_8_62828444-e448-486b-9381-407ac69a929d.png?v=1707449553&width=713',
+      image: 'https://cdn-images.zety.com/templates/zety/iconic-9-classic-silver-dark-276@1x.png',
       category: 'Professional',
       color: '#2F3C7E',
       rating: 4.9,
       downloads: '15K+'
     },
     {
-      id: 'creative',
-      name: 'Creative Edge',
+      id: 'template-9',
+      name: 'Teaching Stylish',
       description: 'Bold design for creative professionals and designers',
-      image: 'https://cdn-blog.novoresume.com/articles/creative-resume-templates/creative-resume-example-1.webp',
+      image: 'https://cdn.create.microsoft.com/catalog-assets/en-us/a32a147f-1f69-4fd5-8a39-c25b2a0093e8/thumbnails/616/stylish-teaching-resume-red-modern-simple-2-1-86dfc2cb0037.webp',
       category: 'Creative',
       color: '#00C9A7',
       rating: 4.8,
       downloads: '12K+'
     },
     {
-      id: 'minimal',
-      name: 'Minimal Clean',
+      id: 'template-10',
+      name: 'Santiago Elegant',
       description: 'Simple elegance that highlights your content beautifully',
-      image: 'https://i.etsystatic.com/20769234/r/il/faf394/2004290491/il_fullxfull.2004290491_530n.jpg',
+      image: 'https://s3.resume.io/cdn-cgi/image/width=380,format=auto/uploads/local_template_image/image/383/persistent-resource/santiago-resume-templates.jpg?v=1656070649',
       category: 'Minimal',
       color: '#FF6B6B',
       rating: 4.9,
       downloads: '18K+'
     },
     {
-      id: 'tech',
-      name: 'Tech Specialist',
+      id: 'template-4',
+      name: 'Executive Classic',
       description: 'Perfect for developers and IT professionals',
-      image: 'https://marketplace.canva.com/EAFRuCp3DcY/3/0/1131w/canva-black-white-minimalist-cv-resume-fbJ3nW9XufE.jpg',
+      image: 'https://www.freesumes.com/wp-content/uploads/2023/04/editable-modern-cv-template.png',
       category: 'Technical',
       color: '#2F3C7E',
       rating: 4.7,
       downloads: '9K+'
     }
   ];
-
   const resumeTips = [
     {
       icon: Target,
@@ -127,12 +128,14 @@ const Dashboard: React.FC = () => {
 
   const createNewResume = () => {
     const newResume: Resume = {
-      id: Date.now().toString(),
-      title: 'Untitled Resume',
-      template: 'modern',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+   id: Date.now().toString(),
+   title: 'Untitled Resume',
+   template: 'template-1',
+   createdAt: new Date().toISOString(),
+   updatedAt: new Date().toISOString(),
+   data: {} // <-- placeholder for now
+ };
+
 
     const updatedResumes = [...resumes, newResume];
     setResumes(updatedResumes);
@@ -152,14 +155,18 @@ const Dashboard: React.FC = () => {
 
   const useTemplate = (templateId: string) => {
     const template = templates.find(t => t.id === templateId);
-    const newResume: Resume = {
-      id: Date.now().toString(),
-      title: `New ${template?.name} Resume`,
-      template: templateId,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+    if (!template) return;
 
+    const newResume: Resume = {
+  id: Date.now().toString(),
+  title: 'Untitled Resume',
+  template: 'template-1',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  data: {} // <-- placeholder for now
+};
+
+    
     const updatedResumes = [...resumes, newResume];
     setResumes(updatedResumes);
     localStorage.setItem('resumes', JSON.stringify(updatedResumes));
@@ -331,7 +338,7 @@ const Dashboard: React.FC = () => {
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-12">
-            {/* Recent Resumes with Card Stack Effect */}
+            {/* Recent Resumes with Enhanced Card Design */}
             <div className={`transition-all duration-1000 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <div className="bg-white rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] p-10 border border-white/50">
                 <div className="flex justify-between items-center mb-8">
@@ -365,12 +372,13 @@ const Dashboard: React.FC = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     {recentResumes.map((resume, index) => (
                       <div key={resume.id} className={`group relative transition-all duration-500 delay-${index * 100}`}>
-                        <div className="bg-white rounded-2xl p-6 shadow-[15px_15px_30px_#d1d9e6,-15px_-15px_30px_#ffffff] hover:shadow-[20px_20px_40px_#d1d9e6,-20px_-20px_40px_#ffffff] transition-all duration-500 transform hover:-translate-y-2 border border-white/50">
-                          <div className="h-40 bg-[#FAFBFC] rounded-xl mb-6 p-4 relative overflow-hidden shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff]">
-                            <div className="absolute top-2 right-2 w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg"></div>
+                        <div className="bg-white rounded-2xl p-8 shadow-[15px_15px_30px_#d1d9e6,-15px_-15px_30px_#ffffff] hover:shadow-[20px_20px_40px_#d1d9e6,-20px_-20px_40px_#ffffff] transition-all duration-500 transform hover:-translate-y-2 border border-white/50 h-full flex flex-col">
+                          {/* Resume Preview Section */}
+                          <div className="h-44 bg-[#FAFBFC] rounded-xl mb-6 p-4 relative overflow-hidden shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff] flex-shrink-0">
+                            <div className="absolute top-3 right-3 w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg"></div>
                             <div className="space-y-3">
                               <div className="h-4 bg-gradient-to-r from-[#2F3C7E] to-[#2F3C7E]/80 rounded w-3/4 shadow-sm"></div>
                               <div className="h-2 bg-[#E9ECEF] rounded w-1/2 shadow-sm"></div>
@@ -382,33 +390,45 @@ const Dashboard: React.FC = () => {
                             </div>
                           </div>
                           
-                          <h3 className="font-bold text-[#212529] mb-3 truncate text-lg">{resume.title}</h3>
-                          <div className="flex items-center text-sm text-[#6C757D] mb-4">
-                            <Clock size={14} className="mr-2" />
-                            <span>{getTimeAgo(resume.updatedAt)}</span>
-                          </div>
-                          
-                          <div className="flex space-x-3">
-                            <Link
-                              to={`/editor/${resume.id}`}
-                              className="flex-1 bg-gradient-to-r from-[#2F3C7E] to-[#2F3C7E]/90 text-white py-3 px-4 rounded-xl hover:shadow-lg transition-all duration-300 text-center font-bold transform hover:scale-105"
-                            >
-                              Edit
-                            </Link>
-                            <Link
-                              to={`/preview/${resume.id}`}
-                              className="flex-1 bg-[#FAFBFC] text-[#2F3C7E] py-3 px-4 rounded-xl shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:shadow-[12px_12px_24px_#d1d9e6,-12px_-12px_24px_#ffffff] transition-all duration-300 text-center font-bold transform hover:scale-105"
-                            >
-                              Preview
-                            </Link>
-                            <button
-                              onClick={() => deleteResume(resume.id)}
-                              className="flex-1 bg-[#FF6B6B] text-white py-3 px-4 rounded-xl hover:shadow-lg transition-all duration-300 text-center font-bold transform hover:scale-105 flex items-center justify-center"
-                              title="Delete Resume"
-                            >
-                              <Trash2 size={18} className="mr-2" />
-                              Delete
-                            </button>
+                          {/* Resume Info Section */}
+                          <div className="flex-grow flex flex-col">
+                            <h3 className="font-bold text-[#212529] mb-3 truncate text-lg">{resume.title}</h3>
+                            <div className="flex items-center text-sm text-[#6C757D] mb-6">
+                              <Clock size={14} className="mr-2 flex-shrink-0" />
+                              <span>{getTimeAgo(resume.updatedAt)}</span>
+                            </div>
+                            
+                            {/* Action Buttons Section - Fixed at bottom */}
+                            <div className="mt-auto">
+                              <div className="flex flex-col sm:flex-row gap-3">
+                                {/* Edit Button */}
+                                <Link
+                                  to={`/editor/${resume.id}`}
+                                  className="group flex-1 bg-gradient-to-r from-[#2F3C7E] to-[#2F3C7E]/90 text-white py-3 px-4 rounded-xl hover:shadow-lg transition-all duration-300 text-center font-bold transform hover:scale-105 hover:from-[#2F3C7E]/90 hover:to-[#2F3C7E] min-h-[48px] flex items-center justify-center"
+                                >
+                                  <span className="group-hover:scale-110 transition-transform duration-300">Edit</span>
+                                </Link>
+                                
+                                {/* Preview & Delete Row */}
+                                <div className="flex gap-3 flex-1">
+                                  <Link
+                                    to={`/preview/${resume.id}`}
+                                    className="group flex-1 bg-[#FAFBFC] text-[#2F3C7E] py-3 px-4 rounded-xl shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:shadow-[12px_12px_24px_#d1d9e6,-12px_-12px_24px_#ffffff] transition-all duration-300 text-center font-bold transform hover:scale-105 hover:text-[#00C9A7] min-h-[48px] flex items-center justify-center"
+                                  >
+                                    <span className="group-hover:scale-110 transition-transform duration-300">Preview</span>
+                                  </Link>
+                                  
+                                  <button
+                                    onClick={() => deleteResume(resume.id)}
+                                    className="group bg-[#FF6B6B] text-white py-3 px-3 rounded-xl hover:shadow-lg transition-all duration-300 font-bold transform hover:scale-105 hover:bg-[#FF5252] min-h-[48px] flex items-center justify-center space-x-2"
+                                    title="Delete Resume"
+                                  >
+                                    <Trash2 size={16} className="group-hover:scale-110 transition-transform duration-300" />
+                                    <span className="group-hover:scale-110 transition-transform duration-300">Delete</span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -453,26 +473,27 @@ const Dashboard: React.FC = () => {
                           <div className="flex items-center space-x-6">
                             <div className="w-32 h-40 bg-white rounded-xl shadow-[10px_10px_20px_#d1d9e6,-10px_-10px_20px_#ffffff] p-3 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
                               <div className="w-full h-full bg-[#FAFBFC] rounded-lg flex items-center justify-center relative overflow-hidden shadow-[inset_5px_5px_10px_#d1d9e6,inset_-5px_-5px_10px_#ffffff]">
-                                <div 
-                                  className="w-20 h-28 rounded shadow-lg p-3 bg-white border-2"
+                                <img
+                                  src={template.image}
+                                  alt={`${template.name} preview`}
+                                  className="w-25 h-45 object-cover rounded shadow-lg border-2"
                                   style={{ borderColor: `${template.color}20` }}
-                                >
-                                  <div className="space-y-1.5">
-                                    <div 
-                                      className="h-2.5 rounded w-3/4 shadow-sm"
-                                      style={{ backgroundColor: template.color }}
-                                    ></div>
-                                    <div className="h-1.5 bg-gray-200 rounded w-1/2 shadow-sm"></div>
-                                    <div className="space-y-1 mt-3">
-                                      <div className="h-1 bg-gray-200 rounded w-full shadow-sm"></div>
-                                      <div className="h-1 bg-gray-200 rounded w-4/5 shadow-sm"></div>
-                                      <div className="h-1 bg-gray-200 rounded w-3/5 shadow-sm"></div>
-                                    </div>
+                                />
+                                <div className="space-y-1.5">
+                                  <div 
+                                    className="h-2.5 rounded w-3/4 shadow-sm"
+                                    style={{ backgroundColor: template.color }}
+                                  ></div>
+                                  <div className="h-1.5 bg-gray-200 rounded w-1/2 shadow-sm"></div>
+                                  <div className="space-y-1 mt-3">
+                                    <div className="h-1 bg-gray-200 rounded w-full shadow-sm"></div>
+                                    <div className="h-1 bg-gray-200 rounded w-4/5 shadow-sm"></div>
+                                    <div className="h-1 bg-gray-200 rounded w-3/5 shadow-sm"></div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            
+                          
                             <div className="flex-1">
                               <div className="flex items-center space-x-3 mb-3">
                                 <h3 className="text-2xl font-black text-[#212529]">{template.name}</h3>

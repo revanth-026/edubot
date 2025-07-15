@@ -1,30 +1,36 @@
 // src/App.tsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import ResumeBuilder from './pages/ResumeBuilder';
-import Templates from './pages/Templates';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
 import { AuthProvider } from './contexts/AuthContext';
+import { ResumeProvider } from './contexts/ResumeContext';
 import { ToastProvider } from './contexts/ToastContext';
+
+import LandingPage from './pages/LandingPage';
+import TemplatesPage from './pages/TemplatesPage';
+import EditorPage from './pages/EditorPage';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <ToastProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/resume-builder" element={<ResumeBuilder />} />
-            <Route path="/templates" element={<Templates />} />
-          </Routes>
-        </Router>
-      </ToastProvider>
+      <ResumeProvider>
+        <ToastProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/templates" element={<TemplatesPage />} />
+              <Route path="/editor" element={<EditorPage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Router>
+        </ToastProvider>
+      </ResumeProvider>
     </AuthProvider>
   );
 };

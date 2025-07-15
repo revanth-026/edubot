@@ -12,6 +12,8 @@ module.exports = {
         cardBg: '#E9ECEF',
       }
     },
+    
   },
+  
   plugins: [],
 };

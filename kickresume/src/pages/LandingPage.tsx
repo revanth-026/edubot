@@ -12,7 +12,7 @@ import {
   Heart,
   Download
 } from 'lucide-react';
-import Templates from '../components/Templates';
+import Templates from '../components/HTemplates';
 
 const LandingPage: React.FC = () => {
   const [visibleCards, setVisibleCards] = useState<number[]>([]);

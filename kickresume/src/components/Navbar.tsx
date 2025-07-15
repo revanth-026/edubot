@@ -93,6 +93,7 @@ const Navbar: React.FC = () => {
               >
                 Templates
               </Link>
+              
               <div className="px-3 py-2 text-[#6C757D] border-t border-[#E9ECEF] mt-2">
                 <div className="flex items-center space-x-2 mb-2">
                   <User size={16} />
