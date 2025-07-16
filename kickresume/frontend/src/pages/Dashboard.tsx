@@ -155,14 +155,13 @@ const Dashboard: React.FC = () => {
     if (!template) return;
 
     const newResume: Resume = {
-  id: Date.now().toString(),
-  title: 'Untitled Resume',
-  template: 'template-1',
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString()
-};
+      id: Date.now().toString(),
+      title: 'Untitled Resume',
+      template: templateId, // Use the actual template ID instead of hardcoded 'template-1'
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
 
-    
     const updatedResumes = [...resumes, newResume];
     setResumes(updatedResumes);
     localStorage.setItem('resumes', JSON.stringify(updatedResumes));
