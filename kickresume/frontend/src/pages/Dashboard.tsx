@@ -12,9 +12,7 @@ interface Resume {
   template: string;
   createdAt: string;
   updatedAt: string;
-  data: any; 
 }
-
 
 interface Template {
   id: string;
@@ -133,7 +131,6 @@ const Dashboard: React.FC = () => {
    template: 'template-1',
    createdAt: new Date().toISOString(),
    updatedAt: new Date().toISOString(),
-   data: {} // <-- placeholder for now
  };
 
 
@@ -162,8 +159,7 @@ const Dashboard: React.FC = () => {
   title: 'Untitled Resume',
   template: 'template-1',
   createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-  data: {} // <-- placeholder for now
+  updatedAt: new Date().toISOString()
 };
 
     
@@ -210,15 +206,15 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFBFC]">
+    <div className="min-h-screen bg-[#FAFBFC] dark:bg-gray-900 transition-colors duration-300">
       <Toast />
       <Navbar />
       
       {/* Floating Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#2F3C7E]/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-96 h-96 bg-[#00C9A7]/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-[#FF6B6B]/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#2F3C7E]/5 dark:bg-[#2F3C7E]/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-96 h-96 bg-[#00C9A7]/5 dark:bg-[#00C9A7]/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-[#FF6B6B]/5 dark:bg-[#FF6B6B]/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }}></div>
       </div>
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -228,13 +224,13 @@ const Dashboard: React.FC = () => {
             {/* Left Side - Hello Message */}
             <div className="flex-1">
               <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#2F3C7E]/10 to-[#00C9A7]/10 px-6 py-3 rounded-full mb-6 border border-[#2F3C7E]/20">
-                <Sparkles size={20} className="text-[#2F3C7E]" />
-                <span className="text-[#2F3C7E] font-semibold">Welcome to your workspace</span>
+                <Sparkles size={20} className="text-[#2F3C7E] dark:text-white" />
+                <span className="text-[#2F3C7E] dark:text-white font-semibold">Welcome to your workspace</span>
               </div>
-              <h1 className="text-5xl font-black text-[#212529] mb-4 tracking-tight">
+              <h1 className="text-5xl font-black text-[#212529] dark:text-white mb-4 tracking-tight">
                 Hello, <span className="bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] bg-clip-text text-transparent">{user?.name}</span>! 👋
               </h1>
-              <p className="text-lg text-[#6C757D] max-w-xl leading-relaxed">
+              <p className="text-lg text-[#6C757D] dark:text-gray-300 max-w-xl leading-relaxed">
                 Ready to craft your next career-defining resume? Let's build something amazing together.
               </p>
             </div>
@@ -243,15 +239,15 @@ const Dashboard: React.FC = () => {
             <div className="flex-1 flex justify-end">
               <div className="relative max-w-md">
                 <div className="absolute inset-0 bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] rounded-3xl transform rotate-1"></div>
-                <div className="relative bg-white rounded-3xl p-8 shadow-2xl border-4 border-white transform -rotate-1 hover:rotate-0 transition-transform duration-500">
+                <div className="relative bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-2xl border-4 border-white dark:border-gray-700 transform -rotate-1 hover:rotate-0 transition-transform duration-500">
                   <div className="text-center">
                     <div className="inline-flex items-center space-x-3 mb-4">
                       <div className="p-3 bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] rounded-2xl">
                         <Rocket size={24} className="text-white" />
                       </div>
-                      <h2 className="text-2xl font-bold text-[#212529]">Launch Career</h2>
+                      <h2 className="text-2xl font-bold text-[#212529] dark:text-white">Launch Career</h2>
                     </div>
-                    <p className="text-[#6C757D] mb-6 leading-relaxed">
+                    <p className="text-[#6C757D] dark:text-gray-300 mb-6 leading-relaxed">
                       Create a professional resume that stands out and lands interviews.
                     </p>
                     <button
@@ -272,63 +268,63 @@ const Dashboard: React.FC = () => {
         {/* Stats Cards with Neumorphism */}
         <div className={`grid md:grid-cols-3 gap-8 mb-16 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="group relative">
-            <div className="bg-[#FAFBFC] p-8 rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] hover:shadow-[25px_25px_70px_#d1d9e6,-25px_-25px_70px_#ffffff] transition-all duration-500 border border-white/50">
+            <div className="bg-[#FAFBFC] dark:bg-gray-800 p-8 rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] dark:shadow-[20px_20px_60px_#1a1a1a,-20px_-20px_60px_#2a2a2a] hover:shadow-[25px_25px_70px_#d1d9e6,-25px_-25px_70px_#ffffff] dark:hover:shadow-[25px_25px_70px_#1a1a1a,-25px_-25px_70px_#2a2a2a] transition-all duration-500 border border-white/50 dark:border-gray-700/50">
               <div className="flex items-center justify-between mb-6">
-                <div className="p-4 bg-gradient-to-br from-[#2F3C7E]/10 to-[#2F3C7E]/5 rounded-2xl shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff]">
-                  <FileText size={32} className="text-[#2F3C7E]" />
+                <div className="p-4 bg-gradient-to-br from-[#2F3C7E]/10 to-[#2F3C7E]/5 rounded-2xl shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#1a1a1a,inset_-8px_-8px_16px_#2a2a2a]">
+                  <FileText size={32} className="text-[#2F3C7E] dark:text-white" />
                 </div>
                 <div className="text-right">
-                  <div className="text-4xl font-black text-[#2F3C7E] mb-1">{stats.resumesCreated}</div>
-                  <div className="text-[#6C757D] text-sm font-semibold uppercase tracking-wider">Created</div>
+                  <div className="text-4xl font-black text-[#2F3C7E] dark:text-white mb-1">{stats.resumesCreated}</div>
+                  <div className="text-[#6C757D] dark:text-gray-300 text-sm font-semibold uppercase tracking-wider">Created</div>
                 </div>
               </div>
-              <div className="border-t border-[#E9ECEF] pt-4">
-                <p className="text-[#212529] font-bold mb-2">Resumes Built</p>
+              <div className="border-t border-[#E9ECEF] dark:border-gray-700 pt-4">
+                <p className="text-[#212529] dark:text-white font-bold mb-2">Resumes Built</p>
                 <div className="flex items-center">
                   <div className="w-3 h-3 bg-green-400 rounded-full mr-3 animate-pulse"></div>
-                  <span className="text-green-600 text-sm font-semibold">Active & Ready</span>
+                  <span className="text-green-600 dark:text-green-400 text-sm font-semibold">Active & Ready</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="group relative">
-            <div className="bg-[#FAFBFC] p-8 rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] hover:shadow-[25px_25px_70px_#d1d9e6,-25px_-25px_70px_#ffffff] transition-all duration-500 border border-white/50">
+            <div className="bg-[#FAFBFC] dark:bg-gray-800 p-8 rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] dark:shadow-[20px_20px_60px_#1a1a1a,-20px_-20px_60px_#2a2a2a] hover:shadow-[25px_25px_70px_#d1d9e6,-25px_-25px_70px_#ffffff] dark:hover:shadow-[25px_25px_70px_#1a1a1a,-25px_-25px_70px_#2a2a2a] transition-all duration-500 border border-white/50 dark:border-gray-700/50">
               <div className="flex items-center justify-between mb-6">
-                <div className="p-4 bg-gradient-to-br from-[#00C9A7]/10 to-[#00C9A7]/5 rounded-2xl shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff]">
-                  <Palette size={32} className="text-[#00C9A7]" />
+                <div className="p-4 bg-gradient-to-br from-[#00C9A7]/10 to-[#00C9A7]/5 rounded-2xl shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#1a1a1a,inset_-8px_-8px_16px_#2a2a2a]">
+                  <Palette size={32} className="text-[#00C9A7] dark:text-white" />
                 </div>
                 <div className="text-right">
-                  <div className="text-4xl font-black text-[#00C9A7] mb-1">{stats.templatesUsed}</div>
-                  <div className="text-[#6C757D] text-sm font-semibold uppercase tracking-wider">Styles</div>
+                  <div className="text-4xl font-black text-[#00C9A7] dark:text-white mb-1">{stats.templatesUsed}</div>
+                  <div className="text-[#6C757D] dark:text-gray-300 text-sm font-semibold uppercase tracking-wider">Styles</div>
                 </div>
               </div>
-              <div className="border-t border-[#E9ECEF] pt-4">
-                <p className="text-[#212529] font-bold mb-2">Templates Used</p>
+              <div className="border-t border-[#E9ECEF] dark:border-gray-700 pt-4">
+                <p className="text-[#212529] dark:text-white font-bold mb-2">Templates Used</p>
                 <div className="flex items-center">
                   <Star size={16} className="text-yellow-400 mr-2 fill-current" />
-                  <span className="text-yellow-600 text-sm font-semibold">Exploring Variety</span>
+                  <span className="text-yellow-600 dark:text-yellow-400 text-sm font-semibold">Exploring Variety</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="group relative">
-            <div className="bg-[#FAFBFC] p-8 rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] hover:shadow-[25px_25px_70px_#d1d9e6,-25px_-25px_70px_#ffffff] transition-all duration-500 border border-white/50">
+            <div className="bg-[#FAFBFC] dark:bg-gray-800 p-8 rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] dark:shadow-[20px_20px_60px_#1a1a1a,-20px_-20px_60px_#2a2a2a] hover:shadow-[25px_25px_70px_#d1d9e6,-25px_-25px_70px_#ffffff] dark:hover:shadow-[25px_25px_70px_#1a1a1a,-25px_-25px_70px_#2a2a2a] transition-all duration-500 border border-white/50 dark:border-gray-700/50">
               <div className="flex items-center justify-between mb-6">
-                <div className="p-4 bg-gradient-to-br from-[#FF6B6B]/10 to-[#FF6B6B]/5 rounded-2xl shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff]">
-                  <Download size={32} className="text-[#FF6B6B]" />
+                <div className="p-4 bg-gradient-to-br from-[#FF6B6B]/10 to-[#FF6B6B]/5 rounded-2xl shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#1a1a1a,inset_-8px_-8px_16px_#2a2a2a]">
+                  <Download size={32} className="text-[#FF6B6B] dark:text-white" />
                 </div>
                 <div className="text-right">
-                  <div className="text-4xl font-black text-[#FF6B6B] mb-1">{stats.pdfDownloads}</div>
-                  <div className="text-[#6C757D] text-sm font-semibold uppercase tracking-wider">Downloads</div>
+                  <div className="text-4xl font-black text-[#FF6B6B] dark:text-white mb-1">{stats.pdfDownloads}</div>
+                  <div className="text-[#6C757D] dark:text-gray-300 text-sm font-semibold uppercase tracking-wider">Downloads</div>
                 </div>
               </div>
-              <div className="border-t border-[#E9ECEF] pt-4">
-                <p className="text-[#212529] font-bold mb-2">PDF Exports</p>
+              <div className="border-t border-[#E9ECEF] dark:border-gray-700 pt-4">
+                <p className="text-[#212529] dark:text-white font-bold mb-2">PDF Exports</p>
                 <div className="flex items-center">
                   <CheckCircle size={16} className="text-green-500 mr-2" />
-                  <span className="text-green-600 text-sm font-semibold">Job Ready</span>
+                  <span className="text-green-600 dark:text-green-400 text-sm font-semibold">Job Ready</span>
                 </div>
               </div>
             </div>
@@ -340,15 +336,15 @@ const Dashboard: React.FC = () => {
           <div className="lg:col-span-2 space-y-12">
             {/* Recent Resumes with Enhanced Card Design */}
             <div className={`transition-all duration-1000 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <div className="bg-white rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] p-10 border border-white/50">
+              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] dark:shadow-[20px_20px_60px_#1a1a1a,-20px_-20px_60px_#2a2a2a] p-10 border border-white/50 dark:border-gray-700/50">
                 <div className="flex justify-between items-center mb-8">
                   <div>
-                    <h2 className="text-3xl font-black text-[#212529] mb-2">Recent Work</h2>
-                    <p className="text-[#6C757D] font-medium">Your latest resume projects</p>
+                    <h2 className="text-3xl font-black text-[#212529] dark:text-white mb-2">Recent Work</h2>
+                    <p className="text-[#6C757D] dark:text-gray-300 font-medium">Your latest resume projects</p>
                   </div>
                   <Link
                     to="/templates"
-                    className="group flex items-center space-x-2 text-[#2F3C7E] hover:text-[#00C9A7] font-bold transition-all duration-300 bg-[#2F3C7E]/5 hover:bg-[#00C9A7]/10 px-6 py-3 rounded-2xl shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:shadow-[12px_12px_24px_#d1d9e6,-12px_-12px_24px_#ffffff]"
+                    className="group flex items-center space-x-2 text-[#2F3C7E] dark:text-white hover:text-[#00C9A7] dark:hover:text-[#00C9A7] font-bold transition-all duration-300 bg-[#2F3C7E]/5 dark:bg-gray-700 hover:bg-[#00C9A7]/10 dark:hover:bg-[#00C9A7]/10 px-6 py-3 rounded-2xl shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#1a1a1a,-8px_-8px_16px_#2a2a2a] hover:shadow-[12px_12px_24px_#d1d9e6,-12px_-12px_24px_#ffffff] dark:hover:shadow-[12px_12px_24px_#1a1a1a,-12px_-12px_24px_#2a2a2a]"
                   >
                     <span>View All</span>
                     <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
@@ -358,12 +354,12 @@ const Dashboard: React.FC = () => {
                 {recentResumes.length === 0 ? (
                   <div className="text-center py-16">
                     <div className="relative mb-8">
-                      <div className="w-32 h-32 bg-[#FAFBFC] rounded-full shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] flex items-center justify-center mx-auto">
-                        <FileText size={48} className="text-[#2F3C7E]" />
+                      <div className="w-32 h-32 bg-[#FAFBFC] dark:bg-gray-700 rounded-full shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] dark:shadow-[20px_20px_60px_#1a1a1a,-20px_-20px_60px_#2a2a2a] flex items-center justify-center mx-auto">
+                        <FileText size={48} className="text-[#2F3C7E] dark:text-white" />
                       </div>
                     </div>
-                    <h3 className="text-2xl font-bold text-[#212529] mb-3">No resumes yet</h3>
-                    <p className="text-[#6C757D] mb-8 text-lg">Create your first professional resume to get started</p>
+                    <h3 className="text-2xl font-bold text-[#212529] dark:text-white mb-3">No resumes yet</h3>
+                    <p className="text-[#6C757D] dark:text-gray-300 mb-8 text-lg">Create your first professional resume to get started</p>
                     <button
                       onClick={createNewResume}
                       className="bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] text-white px-8 py-4 rounded-2xl hover:shadow-xl transition-all duration-300 font-bold text-lg transform hover:scale-105"
@@ -375,25 +371,25 @@ const Dashboard: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     {recentResumes.map((resume, index) => (
                       <div key={resume.id} className={`group relative transition-all duration-500 delay-${index * 100}`}>
-                        <div className="bg-white rounded-2xl p-8 shadow-[15px_15px_30px_#d1d9e6,-15px_-15px_30px_#ffffff] hover:shadow-[20px_20px_40px_#d1d9e6,-20px_-20px_40px_#ffffff] transition-all duration-500 transform hover:-translate-y-2 border border-white/50 h-full flex flex-col">
+                        <div className="bg-white dark:bg-gray-700 rounded-2xl p-8 shadow-[15px_15px_30px_#d1d9e6,-15px_-15px_30px_#ffffff] dark:shadow-[15px_15px_30px_#1a1a1a,-15px_-15px_30px_#2a2a2a] hover:shadow-[20px_20px_40px_#d1d9e6,-20px_-20px_40px_#ffffff] dark:hover:shadow-[20px_20px_40px_#1a1a1a,-20px_-20px_40px_#2a2a2a] transition-all duration-500 transform hover:-translate-y-2 border border-white/50 dark:border-gray-600/50 h-full flex flex-col">
                           {/* Resume Preview Section */}
-                          <div className="h-44 bg-[#FAFBFC] rounded-xl mb-6 p-4 relative overflow-hidden shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff] flex-shrink-0">
+                          <div className="h-44 bg-[#FAFBFC] dark:bg-gray-600 rounded-xl mb-6 p-4 relative overflow-hidden shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#1a1a1a,inset_-8px_-8px_16px_#2a2a2a] flex-shrink-0">
                             <div className="absolute top-3 right-3 w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg"></div>
                             <div className="space-y-3">
                               <div className="h-4 bg-gradient-to-r from-[#2F3C7E] to-[#2F3C7E]/80 rounded w-3/4 shadow-sm"></div>
-                              <div className="h-2 bg-[#E9ECEF] rounded w-1/2 shadow-sm"></div>
+                              <div className="h-2 bg-[#E9ECEF] dark:bg-gray-500 rounded w-1/2 shadow-sm"></div>
                               <div className="space-y-2 mt-4">
-                                <div className="h-2 bg-[#E9ECEF] rounded w-full shadow-sm"></div>
-                                <div className="h-2 bg-[#E9ECEF] rounded w-4/5 shadow-sm"></div>
-                                <div className="h-2 bg-[#E9ECEF] rounded w-3/5 shadow-sm"></div>
+                                <div className="h-2 bg-[#E9ECEF] dark:bg-gray-500 rounded w-full shadow-sm"></div>
+                                <div className="h-2 bg-[#E9ECEF] dark:bg-gray-500 rounded w-4/5 shadow-sm"></div>
+                                <div className="h-2 bg-[#E9ECEF] dark:bg-gray-500 rounded w-3/5 shadow-sm"></div>
                               </div>
                             </div>
                           </div>
                           
                           {/* Resume Info Section */}
                           <div className="flex-grow flex flex-col">
-                            <h3 className="font-bold text-[#212529] mb-3 truncate text-lg">{resume.title}</h3>
-                            <div className="flex items-center text-sm text-[#6C757D] mb-6">
+                            <h3 className="font-bold text-[#212529] dark:text-white mb-3 truncate text-lg">{resume.title}</h3>
+                            <div className="flex items-center text-sm text-[#6C757D] dark:text-gray-300 mb-6">
                               <Clock size={14} className="mr-2 flex-shrink-0" />
                               <span>{getTimeAgo(resume.updatedAt)}</span>
                             </div>
@@ -413,7 +409,7 @@ const Dashboard: React.FC = () => {
                                 <div className="flex gap-3 flex-1">
                                   <Link
                                     to={`/preview/${resume.id}`}
-                                    className="group flex-1 bg-[#FAFBFC] text-[#2F3C7E] py-3 px-4 rounded-xl shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:shadow-[12px_12px_24px_#d1d9e6,-12px_-12px_24px_#ffffff] transition-all duration-300 text-center font-bold transform hover:scale-105 hover:text-[#00C9A7] min-h-[48px] flex items-center justify-center"
+                                    className="group flex-1 bg-[#FAFBFC] dark:bg-gray-600 text-[#2F3C7E] dark:text-white py-3 px-4 rounded-xl shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#1a1a1a,-8px_-8px_16px_#2a2a2a] hover:shadow-[12px_12px_24px_#d1d9e6,-12px_-12px_24px_#ffffff] dark:hover:shadow-[12px_12px_24px_#1a1a1a,-12px_-12px_24px_#2a2a2a] transition-all duration-300 text-center font-bold transform hover:scale-105 hover:text-[#00C9A7] dark:hover:text-[#00C9A7] min-h-[48px] flex items-center justify-center"
                                   >
                                     <span className="group-hover:scale-110 transition-transform duration-300">Preview</span>
                                   </Link>
@@ -440,24 +436,24 @@ const Dashboard: React.FC = () => {
 
             {/* Template Carousel with Floating Cards */}
             <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <div className="bg-white rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] p-10 border border-white/50">
+              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] dark:shadow-[20px_20px_60px_#1a1a1a,-20px_-20px_60px_#2a2a2a] p-10 border border-white/50 dark:border-gray-700/50">
                 <div className="flex justify-between items-center mb-8">
                   <div>
-                    <h2 className="text-3xl font-black text-[#212529] mb-2">Featured Templates</h2>
-                    <p className="text-[#6C757D] font-medium">Professional designs for every industry</p>
+                    <h2 className="text-3xl font-black text-[#212529] dark:text-white mb-2">Featured Templates</h2>
+                    <p className="text-[#6C757D] dark:text-gray-300 font-medium">Professional designs for every industry</p>
                   </div>
                   <div className="flex space-x-3">
                     <button
                       onClick={prevTemplate}
-                      className="p-3 bg-[#FAFBFC] rounded-xl shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:shadow-[12px_12px_24px_#d1d9e6,-12px_-12px_24px_#ffffff] transition-all duration-300 transform hover:scale-110"
+                      className="p-3 bg-[#FAFBFC] dark:bg-gray-700 rounded-xl shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#1a1a1a,-8px_-8px_16px_#2a2a2a] hover:shadow-[12px_12px_24px_#d1d9e6,-12px_-12px_24px_#ffffff] dark:hover:shadow-[12px_12px_24px_#1a1a1a,-12px_-12px_24px_#2a2a2a] transition-all duration-300 transform hover:scale-110"
                     >
-                      <ChevronLeft size={20} className="text-[#6C757D]" />
+                      <ChevronLeft size={20} className="text-[#6C757D] dark:text-gray-300" />
                     </button>
                     <button
                       onClick={nextTemplate}
-                      className="p-3 bg-[#FAFBFC] rounded-xl shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] hover:shadow-[12px_12px_24px_#d1d9e6,-12px_-12px_24px_#ffffff] transition-all duration-300 transform hover:scale-110"
+                      className="p-3 bg-[#FAFBFC] dark:bg-gray-700 rounded-xl shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] dark:shadow-[8px_8px_16px_#1a1a1a,-8px_-8px_16px_#2a2a2a] hover:shadow-[12px_12px_24px_#d1d9e6,-12px_-12px_24px_#ffffff] dark:hover:shadow-[12px_12px_24px_#1a1a1a,-12px_-12px_24px_#2a2a2a] transition-all duration-300 transform hover:scale-110"
                     >
-                      <ChevronRight size={20} className="text-[#6C757D]" />
+                      <ChevronRight size={20} className="text-[#6C757D] dark:text-gray-300" />
                     </button>
                   </div>
                 </div>
@@ -469,10 +465,10 @@ const Dashboard: React.FC = () => {
                   >
                     {templates.map((template) => (
                       <div key={template.id} className="w-full flex-shrink-0 px-3">
-                        <div className="bg-[#FAFBFC] rounded-2xl p-8 shadow-[15px_15px_30px_#d1d9e6,-15px_-15px_30px_#ffffff] hover:shadow-[20px_20px_40px_#d1d9e6,-20px_-20px_40px_#ffffff] transition-all duration-500 border border-white/50 group">
+                        <div className="bg-[#FAFBFC] dark:bg-gray-700 rounded-2xl p-8 shadow-[15px_15px_30px_#d1d9e6,-15px_-15px_30px_#ffffff] dark:shadow-[15px_15px_30px_#1a1a1a,-15px_-15px_30px_#2a2a2a] hover:shadow-[20px_20px_40px_#d1d9e6,-20px_-20px_40px_#ffffff] dark:hover:shadow-[20px_20px_40px_#1a1a1a,-20px_-20px_40px_#2a2a2a] transition-all duration-500 border border-white/50 dark:border-gray-600/50 group">
                           <div className="flex items-center space-x-6">
-                            <div className="w-32 h-40 bg-white rounded-xl shadow-[10px_10px_20px_#d1d9e6,-10px_-10px_20px_#ffffff] p-3 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
-                              <div className="w-full h-full bg-[#FAFBFC] rounded-lg flex items-center justify-center relative overflow-hidden shadow-[inset_5px_5px_10px_#d1d9e6,inset_-5px_-5px_10px_#ffffff]">
+                            <div className="w-32 h-40 bg-white dark:bg-gray-600 rounded-xl shadow-[10px_10px_20px_#d1d9e6,-10px_-10px_20px_#ffffff] dark:shadow-[10px_10px_20px_#1a1a1a,-10px_-10px_20px_#2a2a2a] p-3 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                              <div className="w-full h-full bg-[#FAFBFC] dark:bg-gray-500 rounded-lg flex items-center justify-center relative overflow-hidden shadow-[inset_5px_5px_10px_#d1d9e6,inset_-5px_-5px_10px_#ffffff] dark:shadow-[inset_5px_5px_10px_#1a1a1a,inset_-5px_-5px_10px_#2a2a2a]">
                                 <img
                                   src={template.image}
                                   alt={`${template.name} preview`}
@@ -484,11 +480,11 @@ const Dashboard: React.FC = () => {
                                     className="h-2.5 rounded w-3/4 shadow-sm"
                                     style={{ backgroundColor: template.color }}
                                   ></div>
-                                  <div className="h-1.5 bg-gray-200 rounded w-1/2 shadow-sm"></div>
+                                  <div className="h-1.5 bg-gray-200 dark:bg-gray-400 rounded w-1/2 shadow-sm"></div>
                                   <div className="space-y-1 mt-3">
-                                    <div className="h-1 bg-gray-200 rounded w-full shadow-sm"></div>
-                                    <div className="h-1 bg-gray-200 rounded w-4/5 shadow-sm"></div>
-                                    <div className="h-1 bg-gray-200 rounded w-3/5 shadow-sm"></div>
+                                    <div className="h-1 bg-gray-200 dark:bg-gray-400 rounded w-full shadow-sm"></div>
+                                    <div className="h-1 bg-gray-200 dark:bg-gray-400 rounded w-4/5 shadow-sm"></div>
+                                    <div className="h-1 bg-gray-200 dark:bg-gray-400 rounded w-3/5 shadow-sm"></div>
                                   </div>
                                 </div>
                               </div>
@@ -496,13 +492,13 @@ const Dashboard: React.FC = () => {
                           
                             <div className="flex-1">
                               <div className="flex items-center space-x-3 mb-3">
-                                <h3 className="text-2xl font-black text-[#212529]">{template.name}</h3>
+                                <h3 className="text-2xl font-black text-[#212529] dark:text-white">{template.name}</h3>
                                 <div className="flex items-center space-x-1">
                                   <Star size={16} className="text-yellow-400 fill-current" />
-                                  <span className="text-sm font-bold text-[#6C757D]">{template.rating}</span>
+                                  <span className="text-sm font-bold text-[#6C757D] dark:text-gray-300">{template.rating}</span>
                                 </div>
                               </div>
-                              <p className="text-[#6C757D] mb-4 leading-relaxed font-medium">{template.description}</p>
+                              <p className="text-[#6C757D] dark:text-gray-300 mb-4 leading-relaxed font-medium">{template.description}</p>
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-4">
                                   <span 
@@ -514,7 +510,7 @@ const Dashboard: React.FC = () => {
                                   >
                                     {template.category}
                                   </span>
-                                  <span className="text-xs text-[#6C757D] font-semibold">{template.downloads} downloads</span>
+                                  <span className="text-xs text-[#6C757D] dark:text-gray-300 font-semibold">{template.downloads} downloads</span>
                                 </div>
                                 <button
                                   onClick={() => useTemplate(template.id)}
@@ -539,7 +535,7 @@ const Dashboard: React.FC = () => {
                       className={`w-3 h-3 rounded-full transition-all duration-300 shadow-sm ${
                         index === currentTemplateIndex 
                           ? 'bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] scale-125 shadow-lg' 
-                          : 'bg-[#E9ECEF] hover:bg-[#2F3C7E]/30 shadow-[inset_2px_2px_4px_#d1d9e6,inset_-2px_-2px_4px_#ffffff]'
+                          : 'bg-[#E9ECEF] dark:bg-gray-600 hover:bg-[#2F3C7E]/30 dark:hover:bg-[#2F3C7E]/30 shadow-[inset_2px_2px_4px_#d1d9e6,inset_-2px_-2px_4px_#ffffff] dark:shadow-[inset_2px_2px_4px_#1a1a1a,inset_-2px_-2px_4px_#2a2a2a]'
                       }`}
                     />
                   ))}
@@ -551,14 +547,14 @@ const Dashboard: React.FC = () => {
           {/* Right Column - Tips with Floating Effect */}
           <div className="lg:col-span-1">
             <div className={`transition-all duration-1000 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <div className="bg-white rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] p-8 sticky top-24 border border-white/50">
+              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-[20px_20px_60px_#d1d9e6,-20px_-20px_60px_#ffffff] dark:shadow-[20px_20px_60px_#1a1a1a,-20px_-20px_60px_#2a2a2a] p-8 sticky top-24 border border-white/50 dark:border-gray-700/50">
                 <div className="flex items-center space-x-3 mb-8">
-                  <div className="p-3 bg-gradient-to-br from-[#00C9A7]/10 to-[#00C9A7]/5 rounded-2xl shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff]">
-                    <Lightbulb size={24} className="text-[#00C9A7]" />
+                  <div className="p-3 bg-gradient-to-br from-[#00C9A7]/10 to-[#00C9A7]/5 rounded-2xl shadow-[inset_8px_8px_16px_#d1d9e6,inset_-8px_-8px_16px_#ffffff] dark:shadow-[inset_8px_8px_16px_#1a1a1a,inset_-8px_-8px_16px_#2a2a2a]">
+                    <Lightbulb size={24} className="text-[#00C9A7] dark:text-white" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-black text-[#212529]">Pro Tips</h2>
-                    <p className="text-[#6C757D] text-sm font-semibold">Expert advice</p>
+                    <h2 className="text-2xl font-black text-[#212529] dark:text-white">Pro Tips</h2>
+                    <p className="text-[#6C757D] dark:text-gray-300 text-sm font-semibold">Expert advice</p>
                   </div>
                 </div>
 
@@ -567,17 +563,17 @@ const Dashboard: React.FC = () => {
                     const Icon = tip.icon;
                     return (
                       <div key={index} className="group relative">
-                        <div className="p-5 bg-[#FAFBFC] rounded-xl shadow-[10px_10px_20px_#d1d9e6,-10px_-10px_20px_#ffffff] hover:shadow-[15px_15px_30px_#d1d9e6,-15px_-15px_30px_#ffffff] transition-all duration-300 border border-white/50">
+                        <div className="p-5 bg-[#FAFBFC] dark:bg-gray-700 rounded-xl shadow-[10px_10px_20px_#d1d9e6,-10px_-10px_20px_#ffffff] dark:shadow-[10px_10px_20px_#1a1a1a,-10px_-10px_20px_#2a2a2a] hover:shadow-[15px_15px_30px_#d1d9e6,-15px_-15px_30px_#ffffff] dark:hover:shadow-[15px_15px_30px_#1a1a1a,-15px_-15px_30px_#2a2a2a] transition-all duration-300 border border-white/50 dark:border-gray-600/50">
                           <div className="flex items-start space-x-4">
                             <div 
-                              className="p-3 rounded-xl shadow-[inset_5px_5px_10px_#d1d9e6,inset_-5px_-5px_10px_#ffffff] flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
+                              className="p-3 rounded-xl shadow-[inset_5px_5px_10px_#d1d9e6,inset_-5px_-5px_10px_#ffffff] dark:shadow-[inset_5px_5px_10px_#1a1a1a,inset_-5px_-5px_10px_#2a2a2a] flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
                               style={{ backgroundColor: `${tip.color}15` }}
                             >
                               <Icon size={18} style={{ color: tip.color }} />
                             </div>
                             <div>
-                              <h3 className="font-bold text-[#212529] mb-2">{tip.title}</h3>
-                              <p className="text-[#6C757D] text-sm leading-relaxed">{tip.description}</p>
+                              <h3 className="font-bold text-[#212529] dark:text-white mb-2">{tip.title}</h3>
+                              <p className="text-[#6C757D] dark:text-gray-300 text-sm leading-relaxed">{tip.description}</p>
                             </div>
                           </div>
                         </div>
@@ -586,14 +582,14 @@ const Dashboard: React.FC = () => {
                   })}
                 </div>
 
-                <div className="mt-8 p-6 bg-[#FAFBFC] rounded-2xl shadow-[inset_15px_15px_30px_#d1d9e6,inset_-15px_-15px_30px_#ffffff] border border-white/50">
+                <div className="mt-8 p-6 bg-[#FAFBFC] dark:bg-gray-700 rounded-2xl shadow-[inset_15px_15px_30px_#d1d9e6,inset_-15px_-15px_30px_#ffffff] dark:shadow-[inset_15px_15px_30px_#1a1a1a,inset_-15px_-15px_30px_#2a2a2a] border border-white/50 dark:border-gray-600/50">
                   <div className="flex items-center space-x-3 mb-4">
                     <div className="p-2 bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] rounded-lg shadow-lg">
                       <Star size={16} className="text-white" />
                     </div>
-                    <h3 className="font-black text-[#212529]">💡 Pro Tip</h3>
+                    <h3 className="font-black text-[#212529] dark:text-white">💡 Pro Tip</h3>
                   </div>
-                  <p className="text-[#6C757D] leading-relaxed font-medium">
+                  <p className="text-[#6C757D] dark:text-gray-300 leading-relaxed font-medium">
                     Customize your resume for each job application. Use keywords from the job description to increase your chances of passing ATS systems.
                   </p>
                 </div>

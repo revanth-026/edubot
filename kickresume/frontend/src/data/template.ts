@@ -32,7 +32,7 @@ export const templates: Template[] = [
   {
     id: 'template-4',
     name: 'Executive Classic',
-    previewImg: 'https://www.freesumes.com/wp-content/uploads/2023/04/editable-modern-cv-template.png',
+    previewImg: 'https://responsive-muse.com/wp-content/uploads/2018/05/free-resume-word-template-3.jpg',
     component: Template4
   },
   {

@@ -1,26 +1,16 @@
+// EditorPage.tsx
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useResume } from '../contexts/ResumeContext';
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Palette, Edit3 } from 'lucide-react';
 import ResumeForm from '../components/ResumeForm';
 import ResumePreview from '../components/ResumePreview';
 
 
 const EditorPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const { selectedTemplate, loadResumeById, resumeData } = useResume();
+  const { selectedTemplate,updateRecentResume  } = useResume();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (id) {
-      const resume = loadResumeById(id);
-      if (!resume) {
-        // Resume not found, redirect to dashboard
-        navigate('/dashboard');
-      }
-    }
-  }, [id, loadResumeById, navigate]);
 
   if (!selectedTemplate) {
     return (
@@ -50,7 +40,7 @@ const EditorPage: React.FC = () => {
       <div className="sticky top-0 z-50 bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] text-white shadow-md">
         <div className="flex items-center justify-between px-6 py-4">
           <button
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate('/templates')}
             className="flex items-center gap-2 text-white/90 hover:text-white transition group"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
@@ -64,7 +54,7 @@ const EditorPage: React.FC = () => {
 
           <div className="flex items-center gap-2 text-sm bg-white/10 px-4 py-1 rounded-full font-medium shadow-sm">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
-            <span>Editing: {resumeData?.personalInfo?.fullName || 'Untitled Resume'}</span>
+            <span>Using: {selectedTemplate.name}</span>
           </div>
         </div>
       </div>
@@ -87,9 +77,9 @@ const EditorPage: React.FC = () => {
         <div className="w-1/2 overflow-y-auto custom-scroll px-6 py-8 pb-12 bg-[#f1f5f9]">
           <div className="bg-white border border-[#dbeafe] rounded-xl shadow-xl p-5 mb-8">
             <h2 className="text-lg font-semibold text-[#2F3C7E] mb-6">📄 Live Preview</h2>
-            <div id="resume-preview">
-              <ResumePreview />
-            </div>
+<div id="resume-preview">
+  <ResumePreview />
+</div>
           </div>
         </div>
         

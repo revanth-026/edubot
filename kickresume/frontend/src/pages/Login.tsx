@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, Eye, EyeOff, FileText, User, Briefcase, GraduationCap, Award, Star } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
-import Toast from '../components/Toast';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -33,6 +32,7 @@ const Login: React.FC = () => {
       } else {
         showToast('Invalid email or password. Please try again.', 'error');
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       showToast('An error occurred. Please try again.', 'error');
     }
@@ -40,7 +40,6 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#2F3C7E] via-[#2F3C7E] to-[#1a2456] flex items-center justify-center p-4 relative overflow-hidden">
-      <Toast />
       
       {/* Resume Builder Themed Background Animations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

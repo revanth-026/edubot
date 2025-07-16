@@ -27,13 +27,38 @@ const Register: React.FC = () => {
 
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
+   setIsLoading(true);
+
+try {
+  const res = await fetch('http://localhost:5000/api/users/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name, email, password }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    console.error('Registration error:', data.message);
+    setIsLoading(false);
+    return;
+  }
+
+  // ✅ Save token in localStorage
+  localStorage.setItem('token', data.token);
+
+  console.log('User registered & token saved:', data);
   setIsLoading(false);
-  console.log('Registration attempted with:', { name, email, password, confirmPassword });
-  // Add optional success feedback here
-  navigate('/dashboard'); // ✅ redirects to dashboard
-}, 2000);
+
+  // ✅ Redirect to dashboard
+  navigate('/dashboard');
+} catch (error) {
+  console.error('Request failed:', error);
+  setIsLoading(false);
+}
+
 
   };
 

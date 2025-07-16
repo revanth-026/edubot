@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+// src/contexts/ToastContext.tsx
 import React, { createContext, useContext, useState } from 'react';
 
 interface Toast {
@@ -10,7 +12,6 @@ interface ToastContextType {
   toasts: Toast[];
   showToast: (message: string, type: 'success' | 'error' | 'info') => void;
   removeToast: (id: string) => void;
-  clearToasts: () => void;
 }
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
@@ -40,13 +41,27 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setToasts(prev => prev.filter(toast => toast.id !== id));
   };
 
-  const clearToasts = () => {
-    setToasts([]);
-  };
-
   return (
-    <ToastContext.Provider value={{ toasts, showToast, removeToast, clearToasts }}>
+    <ToastContext.Provider value={{ toasts, showToast, removeToast }}>
       {children}
-      </ToastContext.Provider>
-    );
-  };
+
+      {/* Toast Display UI */}
+      <div className="fixed top-5 right-5 z-50 space-y-3">
+        {toasts.map((toast) => (
+          <div
+            key={toast.id}
+            className={`rounded-lg px-4 py-3 text-white shadow-md transition-all duration-300 ${
+              toast.type === 'success'
+                ? 'bg-green-600'
+                : toast.type === 'error'
+                ? 'bg-red-600'
+                : 'bg-blue-600'
+            }`}
+          >
+            {toast.message}
+          </div>
+        ))}
+      </div>
+    </ToastContext.Provider>
+  );
+};

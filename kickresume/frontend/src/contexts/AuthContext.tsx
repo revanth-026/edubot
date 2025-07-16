@@ -1,4 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 interface User {
   id: string;
@@ -24,15 +26,16 @@ export const useAuth = () => {
   return context;
 };
 
+const API_BASE_URL = 'http://localhost:5000/api'; // change if different
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Check if user is logged in on app start
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
     setIsLoading(false);
   }, []);
@@ -40,68 +43,55 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock authentication - in real app, this would be an API call
-      if (email && password) {
-        const mockUser = {
-          id: '1',
-          name: email.split('@')[0],
-          email: email
-        };
-        setUser(mockUser);
-        localStorage.setItem('user', JSON.stringify(mockUser));
-        setIsLoading(false);
-        return true;
-      }
-      setIsLoading(false);
+      const res = await axios.post(`${API_BASE_URL}/users/login`, { email, password });
+
+      const { user, token } = res.data;
+
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
+
+      setUser(user);
+      return true;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
+      console.error('Login failed:', error.response?.data?.message || error.message);
       return false;
-    } catch (error) {
+    } finally {
       setIsLoading(false);
-      return false;
     }
   };
 
   const register = async (name: string, email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 300));
-      
-      // Mock registration - in real app, this would be an API call
-      if (name && email && password) {
-        const mockUser = {
-          id: '1',
-          name: name,
-          email: email
-        };
-        setUser(mockUser);
-        localStorage.setItem('user', JSON.stringify(mockUser));
-        setIsLoading(false);
-        return true;
-      }
-      setIsLoading(false);
+      const res = await axios.post(`${API_BASE_URL}/auth/register`, { name, email, password });
+
+      const { user, token } = res.data;
+
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
+
+      setUser(user);
+      return true;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error('Registration failed:', error.response?.data?.message || error.message);
       return false;
-    } catch (error) {
+    } finally {
       setIsLoading(false);
-      return false;
     }
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     localStorage.removeItem('resumes');
   };
 
-  const value = {
-    user,
-    login,
-    register,
-    logout,
-    isLoading
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, login, register, logout, isLoading }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
