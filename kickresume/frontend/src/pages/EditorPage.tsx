@@ -1,14 +1,71 @@
-// src/pages/EditorPage.tsx
-import React from 'react';
-import { useResume } from '../contexts/ResumeContext';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Palette, Edit3, Save } from 'lucide-react';
 import ResumeForm from '../components/ResumeForm';
 import ResumePreview from '../components/ResumePreview';
+import { useResume } from '../contexts/ResumeContext';
+import { createResume, getResumeById, updateResume } from '../api/resumeApi';
+import type { ResumeData } from '../types/resume';
 
 const EditorPage: React.FC = () => {
-  const { selectedTemplate } = useResume();
   const navigate = useNavigate();
+  const {
+    selectedTemplate,
+    resumeData,
+    setResumeData,
+    resumeId,
+    setResumeId,
+  } = useResume();
+
+  const [loading, setLoading] = useState(false);
+
+  // Load resume data on mount if resumeId exists
+  useEffect(() => {
+    const fetchResume = async () => {
+      if (resumeId) {
+        setLoading(true);
+        try {
+          const data = await getResumeById(resumeId);
+          setResumeData(data); // Assuming this updates context state
+        } catch (error) {
+          console.error('Failed to load resume:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchResume();
+  }, [resumeId, setResumeData]);
+
+  const handleSave = async () => {
+    if (!resumeData || !selectedTemplate) {
+      alert('Missing resume data or template!');
+      return;
+    }
+
+    const payload: ResumeData = {
+      ...resumeData,
+      template: selectedTemplate.id,
+    };
+
+    try {
+      if (resumeId) {
+        const updated = await updateResume(resumeId, payload);
+        console.log('Resume updated:', updated);
+      } else {
+        const created = await createResume(payload);
+        setResumeId(created._id);
+        localStorage.setItem('resumeId', created._id);
+        console.log('Resume created:', created);
+      }
+
+      navigate('/finalpreview');
+    } catch (error) {
+      console.error('Error saving resume:', error);
+      alert('Failed to save resume. Please try again.');
+    }
+  };
 
   if (!selectedTemplate) {
     return (
@@ -20,7 +77,9 @@ const EditorPage: React.FC = () => {
             <Edit3 className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-[#2F3C7E] mb-4">No Template Selected</h1>
-          <p className="text-[#6C757D] mb-8 max-w-md mx-auto">Please select a template to start editing your resume.</p>
+          <p className="text-[#6C757D] mb-8 max-w-md mx-auto">
+            Please select a template to start editing your resume.
+          </p>
           <button
             onClick={() => navigate('/templates')}
             className="bg-gradient-to-r from-[#2F3C7E] to-[#00C9A7] text-white px-8 py-3 rounded-lg hover:opacity-90 transition-all font-semibold shadow-lg"
@@ -51,7 +110,7 @@ const EditorPage: React.FC = () => {
           </div>
 
           <button
-            onClick={() => navigate('/finalpreview')}
+            onClick={handleSave}
             className="flex items-center gap-2 bg-white text-[#2F3C7E] px-4 py-2 rounded-full hover:bg-[#F8F9FA] transition font-semibold shadow"
           >
             <Save className="w-4 h-4" />
@@ -62,8 +121,8 @@ const EditorPage: React.FC = () => {
 
       {/* Layout */}
       <div className="flex h-[calc(100vh-65px)] overflow-hidden relative">
-        <div className="absolute left-10 top-10 w-24 h-24 bg-[#2F3C7E] opacity-10 rounded-full blur-2xl animate-float"></div>
-        <div className="absolute right-10 bottom-10 w-28 h-28 bg-[#00C9A7] opacity-10 rounded-full blur-2xl animate-float-reverse"></div>
+        <div className="absolute left-10 top-10 w-24 h-24 bg-[#2F3C7E] opacity-10 rounded-full blur-2xl animate-float" />
+        <div className="absolute right-10 bottom-10 w-28 h-28 bg-[#00C9A7] opacity-10 rounded-full blur-2xl animate-float-reverse" />
 
         {/* Form Section */}
         <div className="w-1/2 overflow-y-auto custom-scroll px-6 py-8 pb-12 bg-white">
@@ -77,21 +136,8 @@ const EditorPage: React.FC = () => {
         <div className="w-1/2 overflow-y-auto custom-scroll px-6 py-8 pb-12 bg-[#f1f5f9]">
           <div className="bg-white border border-[#dbeafe] rounded-xl shadow-xl p-5 mb-8 overflow-hidden">
             <h2 className="text-lg font-semibold text-[#2F3C7E] mb-6">📄 Live Preview</h2>
-            <div
-              id="resume-preview"
-              className="hide-scrollbar"
-              style={{
-                width: '100%',
-                overflow: 'hidden',
-              }}
-            >
-              <div
-                style={{
-                  transform: 'scale(0.9)',
-                  transformOrigin: 'top left',
-                  width: '111%',
-                }}
-              >
+            <div id="resume-preview" className="hide-scrollbar">
+              <div className="scale-95 origin-top-left">
                 <ResumePreview />
               </div>
             </div>

@@ -14,29 +14,34 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email || !password) {
-      showToast('Please fill in all fields', 'error');
-      return;
-    }
+  e.preventDefault();
 
-    try {
-      const success = await login(email, password);
-      if (success) {
-        showToast('Login successful! Welcome back.', 'success');
-        // Redirect after a short delay to show the success message
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 1000);
-      } else {
-        showToast('Invalid email or password. Please try again.', 'error');
-      }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
-      showToast('An error occurred. Please try again.', 'error');
+  if (!email || !password) {
+    showToast('Please fill in all fields', 'error');
+    return;
+  }
+
+  try {
+    // Example API call to your local backend
+    const response = await fetch('https://musical-meme-694r5pwvg9xrhqw9-5173.app.github.dev/api/users/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      showToast('Login successful! Welcome back.', 'success');
+      setTimeout(() => navigate('/dashboard'), 1000);
+    } else {
+      showToast(data.message || 'Invalid credentials', 'error');
     }
-  };
+  } catch (error) {
+    showToast('An error occurred. Please try again.', 'error');
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#2F3C7E] via-[#2F3C7E] to-[#1a2456] flex items-center justify-center p-4 relative overflow-hidden">

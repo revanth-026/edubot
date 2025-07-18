@@ -43,6 +43,7 @@ export interface Skill {
 }
 
 export interface ResumeData {
+  template: string;
   personalInfo: PersonalInfo;
   summary: string;
   experience: Experience[];

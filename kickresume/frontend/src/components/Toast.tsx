@@ -9,21 +9,21 @@ const Toast: React.FC = () => {
   return (
     <div className="fixed top-6 right-6 z-50 space-y-3">
       {toasts.map((toast) => {
-        let color =
+        const color =
           toast.type === 'success'
-            ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border-l-4 border-green-500'
+            ? 'bg-green-100 text-green-800 border-l-4 border-green-500'
             : toast.type === 'error'
-            ? 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 border-l-4 border-red-500'
-            : 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border-l-4 border-blue-500';
+            ? 'bg-red-100 text-red-800 border-l-4 border-red-500'
+            : 'bg-blue-100 text-blue-800 border-l-4 border-blue-500';
 
         return (
           <div
             key={toast.id}
-            className={`px-6 py-3 rounded-lg shadow-lg flex justify-between items-center transition-colors duration-300 ${color}`}
+            className={`px-6 py-3 rounded-lg shadow-lg flex justify-between items-center ${color}`}
           >
             <span>{toast.message}</span>
             <button
-              className="ml-4 font-bold hover:opacity-70 transition-opacity duration-200"
+              className="ml-4 font-bold"
               onClick={() => removeToast(toast.id)}
             >
               ✕

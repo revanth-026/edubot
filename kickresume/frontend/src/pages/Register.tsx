@@ -30,7 +30,7 @@ const Register: React.FC = () => {
    setIsLoading(true);
 
 try {
-  const res = await fetch('http://localhost:5000/api/users/register', {
+  const res = await fetch('https://musical-meme-694r5pwvg9xrhqw9-5173.app.github.dev/api/users/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -58,8 +58,6 @@ try {
   console.error('Request failed:', error);
   setIsLoading(false);
 }
-
-
   };
 
   return (

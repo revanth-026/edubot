@@ -1,3 +1,4 @@
+// src/contexts/ResumeContext.tsx
 import React, { createContext, useContext, useState, type ReactNode } from 'react';
 import type { ResumeData, Template } from '../types/resume';
 
@@ -11,68 +12,25 @@ const initialResumeData: ResumeData = {
     linkedin: 'linkedin.com/in/johndoe',
     github: 'github.com/johndoe',
     nationality: undefined,
-    address: undefined
+    address: undefined,
+    title: undefined
   },
-  summary: 'Experienced professional with a proven track record of delivering high-quality results in dynamic environments. Skilled in leadership, problem-solving, and strategic planning.',
-  experience: [
-    {
-      id: '1',
-      company: 'Tech Corp',
-      position: 'Senior Software Engineer',
-      startDate: '2020-01',
-      endDate: '2024-01',
-      current: false,
-      description: 'Led development of scalable web applications using React and Node.js. Collaborated with cross-functional teams to deliver projects on time and within budget.',
-      location: 'San Francisco, CA'
-    },
-    {
-      id: '2',
-      company: 'StartupXYZ',
-      position: 'Full Stack Developer',
-      startDate: '2018-06',
-      endDate: '2020-01',
-      current: false,
-      description: 'Built and maintained full-stack applications using modern technologies. Implemented CI/CD pipelines and improved development workflows.',
-      location: 'Austin, TX'
-    }
-  ],
-  education: [
-    {
-      id: '1',
-      institution: 'University of Technology',
-      degree: 'Bachelor of Science',
-      field: 'Computer Science',
-      startDate: '2014-09',
-      endDate: '2018-05',
-      current: false,
-      gpa: '3.8',
-      location: ''
-    }
-  ],
-  skills: [
-    { id: '1', name: 'JavaScript', level: 'Expert' },
-    { id: '2', name: 'React', level: 'Expert' },
-    { id: '3', name: 'Node.js', level: 'Advanced' },
-    { id: '4', name: 'Python', level: 'Advanced' },
-    { id: '5', name: 'AWS', level: 'Intermediate' }
-  ],
-  languages: ['English (Native)', 'Spanish (Conversational)'],
-  certifications: ['AWS Certified Developer', 'Google Cloud Professional'],
-  projects: [
-    {
-      id: '1',
-      name: 'E-commerce Platform',
-      description: 'Built a full-stack e-commerce solution with payment integration and inventory management.',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-      url: 'https://github.com/johndoe/ecommerce'
-    }
-  ]
+  summary: 'Experienced professional with a proven track record...',
+  experience: [],
+  education: [],
+  skills: [],
+  languages: [],
+  certifications: [],
+  projects: [],
+  template: ''
 };
 
 interface ResumeContextType {
   resumeData: ResumeData;
   selectedTemplate: Template | null;
-  recentResumes: { id: string; title: string; updatedAt: string }[];  // <-- Add this
+  recentResumes: { id: string; title: string; updatedAt: string }[];
+  resumeId: string | null;
+  setResumeId: (id: string) => void;
   setResumeData: (data: ResumeData) => void;
   updatePersonalInfo: (info: Partial<ResumeData['personalInfo']>) => void;
   updateSummary: (summary: string) => void;
@@ -83,9 +41,8 @@ interface ResumeContextType {
   updateCertifications: (certifications: string[]) => void;
   updateProjects: (projects: ResumeData['projects']) => void;
   setSelectedTemplate: (template: Template) => void;
-  updateRecentResume: (id: string, updatedFields: Partial<{ title: string; updatedAt: string }>) => void; // <-- Add this
+  updateRecentResume: (id: string, updatedFields: Partial<{ title: string; updatedAt: string }>) => void;
 }
-
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 
@@ -93,6 +50,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [recentResumes, setRecentResumes] = useState<{ id: string; title: string; updatedAt: string }[]>([]);
+  const [resumeId, setResumeId] = useState<string | null>(null);
 
   const updatePersonalInfo = (info: Partial<ResumeData['personalInfo']>) => {
     setResumeData(prev => ({
@@ -142,6 +100,8 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       resumeData,
       selectedTemplate,
       recentResumes,
+      resumeId,
+      setResumeId,
       setResumeData,
       updatePersonalInfo,
       updateSummary,

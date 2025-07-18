@@ -133,7 +133,6 @@ const Dashboard: React.FC = () => {
    updatedAt: new Date().toISOString(),
  };
 
-
     const updatedResumes = [...resumes, newResume];
     setResumes(updatedResumes);
     localStorage.setItem('resumes', JSON.stringify(updatedResumes));
@@ -150,24 +149,27 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const useTemplate = (templateId: string) => {
-    const template = templates.find(t => t.id === templateId);
-    if (!template) return;
+const useTemplate = (templateId: string) => {
+  const template = templates.find(t => t.id === templateId);
+  if (!template) return;
 
-    const newResume: Resume = {
-      id: Date.now().toString(),
-      title: 'Untitled Resume',
-      template: templateId, // Use the actual template ID instead of hardcoded 'template-1'
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-
-    const updatedResumes = [...resumes, newResume];
-    setResumes(updatedResumes);
-    localStorage.setItem('resumes', JSON.stringify(updatedResumes));
-    navigate(`/editor/${newResume.id}`);
-    showToast('Template applied successfully!', 'success');
+  const newResume: Resume = {
+    id: Date.now().toString(),
+    title: 'Untitled Resume',
+    template: templateId,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
+
+  const updatedResumes = [...resumes, newResume];
+  setResumes(updatedResumes);
+  localStorage.setItem('resumes', JSON.stringify(updatedResumes));
+
+  // ✅ FIX: pass the new resume's ID
+  navigate(`/editor/${newResume.id}`);
+  showToast('Template applied successfully!', 'success');
+};
+
 
   const nextTemplate = () => {
     setCurrentTemplateIndex((prev) => (prev + 1) % templates.length);
